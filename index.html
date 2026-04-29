@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Havren Wright — Full-Stack Software Engineer</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink: #0f0f0f;
+      --paper: #f8f6f1;
+      --accent: #2a5cff;
+      --accent-light: #eef1ff;
+      --muted: #6b6b6b;
+      --border: #e2ddd6;
+      --card: #ffffff;
+      --serif: 'DM Serif Display', Georgia, serif;
+      --sans: 'DM Sans', system-ui, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--sans);
+      background: var(--paper);
+      color: var(--ink);
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.2rem 3rem;
+      background: rgba(248,246,241,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: var(--serif);
+      font-size: 1.3rem;
+      color: var(--ink);
+      text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--muted);
+      letter-spacing: 0.02em;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 4rem;
+      padding: 8rem 3rem 4rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .hero-text { animation: fadeUp 0.8s ease both; }
+    .hero-tag {
+      display: inline-block;
+      background: var(--accent-light);
+      color: var(--accent);
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.4rem 1rem;
+      border-radius: 100px;
+      margin-bottom: 1.5rem;
+    }
+    .hero h1 {
+      font-family: var(--serif);
+      font-size: clamp(2.8rem, 5vw, 4.2rem);
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+      color: var(--ink);
+    }
+    .hero h1 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+    .hero p {
+      font-size: 1.1rem;
+      color: var(--muted);
+      max-width: 480px;
+      margin-bottom: 2.5rem;
+      line-height: 1.75;
+    }
+    .hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.85rem 1.8rem;
+      border-radius: 6px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s;
+      cursor: pointer;
+      border: none;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: white;
+    }
+    .btn-primary:hover { background: #1a4aee; transform: translateY(-1px); }
+    .btn-secondary {
+      background: transparent;
+      color: var(--ink);
+      border: 1.5px solid var(--border);
+    }
+    .btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* Hero visual */
+    .hero-visual {
+      animation: fadeUp 0.8s 0.2s ease both;
+      position: relative;
+    }
+    .hero-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2rem;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.08);
+    }
+    .hero-card-header {
+      display: flex; align-items: center; gap: 1rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .avatar {
+      width: 56px; height: 56px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #2a5cff, #7b9fff);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--serif);
+      font-size: 1.4rem;
+      color: white;
+      flex-shrink: 0;
+    }
+    .hero-card-header h3 { font-size: 1rem; font-weight: 600; }
+    .hero-card-header p { font-size: 0.85rem; color: var(--muted); }
+    .stack-chips { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem; }
+    .chip {
+      background: var(--accent-light);
+      color: var(--accent);
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 0.3rem 0.75rem;
+      border-radius: 100px;
+    }
+    .stat-row {
+      display: grid; grid-template-columns: 1fr 1fr 1fr;
+      gap: 1rem; text-align: center;
+    }
+    .stat-row div { }
+    .stat-num {
+      font-family: var(--serif);
+      font-size: 1.6rem;
+      color: var(--ink);
+      display: block;
+    }
+    .stat-label { font-size: 0.75rem; color: var(--muted); }
+
+    /* Floating badge */
+    .badge {
+      position: absolute;
+      bottom: -1rem; left: -1.5rem;
+      background: var(--ink);
+      color: white;
+      padding: 0.75rem 1.25rem;
+      border-radius: 10px;
+      font-size: 0.82rem;
+      font-weight: 500;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+      animation: float 3s ease-in-out infinite;
+    }
+    .badge span { display: block; font-size: 0.7rem; opacity: 0.6; margin-top: 0.1rem; }
+
+    /* ── SECTION BASE ── */
+    section { padding: 6rem 3rem; }
+    .container { max-width: 1200px; margin: 0 auto; }
+    .section-label {
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.75rem;
+    }
+    .section-title {
+      font-family: var(--serif);
+      font-size: clamp(2rem, 3.5vw, 2.8rem);
+      line-height: 1.15;
+      margin-bottom: 1rem;
+    }
+    .section-sub {
+      color: var(--muted);
+      font-size: 1.05rem;
+      max-width: 540px;
+      margin-bottom: 3.5rem;
+      line-height: 1.7;
+    }
+
+    /* ── ABOUT ── */
+    .about-bg { background: var(--ink); color: white; }
+    .about-bg .section-label { color: #7b9fff; }
+    .about-bg .section-title { color: white; }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+    .about-text p {
+      color: rgba(255,255,255,0.72);
+      font-size: 1.05rem;
+      line-height: 1.8;
+      margin-bottom: 1.25rem;
+    }
+    .about-text p strong { color: white; }
+    .timeline { display: flex; flex-direction: column; gap: 1.5rem; }
+    .timeline-item {
+      display: flex; gap: 1.25rem;
+      padding: 1.25rem;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
+      transition: background 0.2s;
+    }
+    .timeline-item:hover { background: rgba(255,255,255,0.1); }
+    .timeline-icon {
+      font-size: 1.4rem;
+      flex-shrink: 0;
+      margin-top: 0.1rem;
+    }
+    .timeline-item h4 { font-size: 0.95rem; font-weight: 600; color: white; margin-bottom: 0.2rem; }
+    .timeline-item p { font-size: 0.85rem; color: rgba(255,255,255,0.55); margin: 0; }
+
+    /* ── PROJECTS ── */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 1.5rem;
+    }
+    .project-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.75rem;
+      transition: all 0.25s;
+      position: relative;
+      overflow: hidden;
+    }
+    .project-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent), #7b9fff);
+      opacity: 0;
+      transition: opacity 0.25s;
+    }
+    .project-card:hover { transform: translateY(-4px); box-shadow: 0 16px 48px rgba(0,0,0,0.1); }
+    .project-card:hover::before { opacity: 1; }
+    .project-card.featured {
+      grid-column: span 2;
+      background: linear-gradient(135deg, #f0f4ff 0%, #ffffff 100%);
+    }
+    .project-tag {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.75rem;
+    }
+    .project-card h3 {
+      font-family: var(--serif);
+      font-size: 1.35rem;
+      margin-bottom: 0.75rem;
+      line-height: 1.2;
+    }
+    .project-card p {
+      font-size: 0.92rem;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 1.25rem;
+    }
+    .project-stack { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1.5rem; }
+    .project-stack span {
+      background: var(--paper);
+      border: 1px solid var(--border);
+      font-size: 0.75rem;
+      font-weight: 500;
+      padding: 0.25rem 0.6rem;
+      border-radius: 4px;
+      color: var(--ink);
+    }
+    .project-links { display: flex; gap: 0.75rem; }
+    .project-link {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--accent);
+      text-decoration: none;
+      display: flex; align-items: center; gap: 0.3rem;
+    }
+    .project-link:hover { text-decoration: underline; }
+    .project-link.ghost { color: var(--muted); }
+
+    /* ── SKILLS ── */
+    .skills-bg { background: #f0f4ff; }
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+    .skill-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem 1.5rem;
+      transition: all 0.2s;
+    }
+    .skill-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+    .skill-card h4 {
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.6rem;
+    }
+    .skill-card p { font-size: 0.88rem; color: var(--muted); line-height: 1.5; }
+
+    /* ── CONTACT ── */
+    .contact-bg { background: var(--ink); }
+    .contact-inner {
+      text-align: center;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .contact-inner .section-label { color: #7b9fff; }
+    .contact-inner .section-title { color: white; margin-bottom: 1rem; }
+    .contact-inner p { color: rgba(255,255,255,0.6); margin-bottom: 2.5rem; font-size: 1.05rem; }
+    .contact-links { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+    .contact-link {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.85rem 1.6rem;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .contact-link.primary { background: var(--accent); color: white; }
+    .contact-link.primary:hover { background: #1a4aee; }
+    .contact-link.outline {
+      border: 1.5px solid rgba(255,255,255,0.2);
+      color: white;
+    }
+    .contact-link.outline:hover { border-color: white; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #080808;
+      color: rgba(255,255,255,0.4);
+      text-align: center;
+      padding: 1.5rem;
+      font-size: 0.82rem;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(-6px); }
+    }
+
+    /* scroll reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { gap: 1.2rem; }
+      .hero { grid-template-columns: 1fr; padding: 7rem 1.5rem 3rem; gap: 2.5rem; }
+      .hero-visual { display: none; }
+      section { padding: 4rem 1.5rem; }
+      .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .project-card.featured { grid-column: span 1; }
+      .projects-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">HW.</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section style="padding-top:0; padding-bottom:0;">
+  <div class="hero">
+    <div class="hero-text">
+      <span class="hero-tag">🎓 TripleTen Graduate · April 2026</span>
+      <h1>Building software that <em>actually</em> helps people.</h1>
+      <p>I'm Havren Wright — a Full-Stack Software Engineer and former K-12 Technology Teacher based in Brookhaven, GA. I build web apps with React, Node.js, and MongoDB that are intuitive, purposeful, and user-focused.</p>
+      <div class="hero-cta">
+        <a href="#projects" class="btn btn-primary">View My Work →</a>
+        <a href="mailto:havrenwright@gmail.com" class="btn btn-secondary">Get In Touch</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-card">
+        <div class="hero-card-header">
+          <div class="avatar">H</div>
+          <div>
+            <h3>Havren Wright</h3>
+            <p>Full-Stack Software Engineer</p>
+          </div>
+        </div>
+        <div class="stack-chips">
+          <span class="chip">React</span>
+          <span class="chip">Node.js</span>
+          <span class="chip">MongoDB</span>
+          <span class="chip">Express</span>
+          <span class="chip">JavaScript</span>
+          <span class="chip">Google Cloud</span>
+        </div>
+        <div class="stat-row">
+          <div>
+            <span class="stat-num">2</span>
+            <span class="stat-label">Live Apps</span>
+          </div>
+          <div>
+            <span class="stat-num">9+</span>
+            <span class="stat-label">Years in Tech</span>
+          </div>
+          <div>
+            <span class="stat-num">100+</span>
+            <span class="stat-label">GitHub Commits</span>
+          </div>
+        </div>
+      </div>
+      <div class="badge">
+        🏅 TripleTen Certified
+        <span>Certificate #20262SE03738</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about-bg" id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <div class="section-label">About Me</div>
+        <h2 class="section-title" style="color:white;">From the classroom<br>to the codebase.</h2>
+        <p>After <strong>9 years as a K-12 Technology Teacher</strong>, I made a deliberate leap into software engineering. Teaching gave me something most developers take years to learn — the ability to understand users deeply, communicate complex ideas simply, and build tools people actually want to use.</p>
+        <p>I completed the <strong>TripleTen Software Engineering Bootcamp</strong> in April 2026, where I built and deployed full-stack applications using React, Node.js, Express, and MongoDB. I'm now actively seeking my first role as a junior developer.</p>
+        <p>I'm drawn to teams where engineering and empathy go hand in hand — whether that's EdTech, SaaS, or anywhere that values software with a human touch.</p>
+        <div style="margin-top:2rem;">
+          <a href="https://www.linkedin.com/in/havren-wright-1082052b9" target="_blank" class="btn btn-primary" style="margin-right:0.75rem;">LinkedIn</a>
+          <a href="https://github.com/Havvie" target="_blank" class="btn btn-secondary" style="border-color:rgba(255,255,255,0.2); color:white;">GitHub</a>
+        </div>
+      </div>
+      <div class="timeline reveal">
+        <div class="timeline-item">
+          <div class="timeline-icon">🎓</div>
+          <div>
+            <h4>TripleTen Software Engineering Bootcamp</h4>
+            <p>Completed April 2026 · Full-stack: JS, React, Node, MongoDB, Google Cloud</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-icon">🏫</div>
+          <div>
+            <h4>Technology Teacher · DeKalb County & Atlanta Public Schools</h4>
+            <p>2016–Present · Managed 1,000+ devices, Tier II support, Teacher of the Year 2024–25</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-icon">📚</div>
+          <div>
+            <h4>Ed.S. Instructional Technology</h4>
+            <p>University of West Georgia · 2021</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-icon">📱</div>
+          <div>
+            <h4>Customer Service Rep · Verizon Wireless</h4>
+            <p>2014–2016 · Technical troubleshooting, CRM, Tier I/II escalations</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="container">
+    <div class="section-label reveal">Projects</div>
+    <h2 class="section-title reveal">Things I've built.</h2>
+    <p class="section-sub reveal">Real apps, deployed and live. Each project was built end-to-end — from design to deployment.</p>
+    <div class="projects-grid">
+
+      <div class="project-card featured reveal">
+        <span class="project-tag">⭐ Featured · Full-Stack</span>
+        <h3>WTWR — What to Wear</h3>
+        <p>A full-stack wardrobe app that detects your location via geolocation and live weather data, then recommends clothing from your personal closet. Features user authentication, image URL uploads, and a RESTful Express/MongoDB backend — fully deployed with a separate frontend and backend server.</p>
+        <div class="project-stack">
+          <span>React</span><span>Node.js</span><span>Express</span><span>MongoDB</span>
+          <span>Geolocation API</span><span>JWT Auth</span><span>GitHub Pages</span>
+        </div>
+        <div class="project-links">
+          <a href="https://havvie.github.io/se_project_react" target="_blank" class="project-link">🔗 Live App</a>
+          <a href="https://github.com/Havvie/se_project_react" target="_blank" class="project-link ghost">GitHub →</a>
+        </div>
+      </div>
+
+      <div class="project-card reveal">
+        <span class="project-tag">🎓 Bootcamp Final Project</span>
+        <h3>News Explorer</h3>
+        <p>A news search app integrating the NewsAPI to fetch real-time articles by keyword. Built with React Router, reusable modal components, and a Figma-matched UI. Handles the full API lifecycle — loading, errors, empty states, and paginated rendering.</p>
+        <div class="project-stack">
+          <span>React</span><span>React Router</span><span>NewsAPI</span>
+          <span>Vite</span><span>CSS</span>
+        </div>
+        <div class="project-links">
+          <a href="https://havvie.github.io/news-explorer-frontend" target="_blank" class="project-link">🔗 Live App</a>
+          <a href="https://github.com/Havvie/news-explorer-frontend" target="_blank" class="project-link ghost">GitHub →</a>
+        </div>
+      </div>
+
+      <div class="project-card reveal">
+        <span class="project-tag">✅ Completed</span>
+        <h3>Todo App</h3>
+        <p>An interactive task manager built with vanilla JavaScript — no frameworks. Demonstrates core DOM manipulation, event handling, and real-time UI state management from scratch.</p>
+        <div class="project-stack">
+          <span>JavaScript</span><span>HTML5</span><span>CSS3</span>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/Havvie/se_project_todo-app" target="_blank" class="project-link ghost">GitHub →</a>
+        </div>
+      </div>
+
+      <div class="project-card reveal">
+        <span class="project-tag">🏫 Real-World Tool</span>
+        <h3>Tech Curriculum Tracker</h3>
+        <p>A web tool built to solve a real classroom problem — logging and managing technology curriculum implementation across grade levels, using Google Sheets as a live backend data store.</p>
+        <div class="project-stack">
+          <span>JavaScript</span><span>Bootstrap</span><span>Google Sheets API</span>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/Havvie" target="_blank" class="project-link ghost">GitHub →</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section class="skills-bg" id="skills">
+  <div class="container">
+    <div class="section-label reveal">Skills</div>
+    <h2 class="section-title reveal">What I work with.</h2>
+    <p class="section-sub reveal">Full-stack tools from frontend to deployment, plus a decade of real-world IT experience underneath.</p>
+    <div class="skills-grid">
+      <div class="skill-card reveal">
+        <h4>Languages</h4>
+        <p>JavaScript (ES6+), HTML5, CSS3, TypeScript, C#</p>
+      </div>
+      <div class="skill-card reveal">
+        <h4>Frontend</h4>
+        <p>React, React Router, Bootstrap, Vite, Responsive Design</p>
+      </div>
+      <div class="skill-card reveal">
+        <h4>Backend</h4>
+        <p>Node.js, Express.js, RESTful APIs, JWT Authentication</p>
+      </div>
+      <div class="skill-card reveal">
+        <h4>Database</h4>
+        <p>MongoDB, Google Sheets API, Third-Party API Integration</p>
+      </div>
+      <div class="skill-card reveal">
+        <h4>Tools</h4>
+        <p>Git, GitHub, Google Cloud, GitHub Pages, VS Code</p>
+      </div>
+      <div class="skill-card reveal">
+        <h4>IT & Support</h4>
+        <p>Windows, macOS, Tier I/II Support, Hardware Diagnostics, Networking</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-bg" id="contact">
+  <div class="container">
+    <div class="contact-inner reveal">
+      <div class="section-label">Contact</div>
+      <h2 class="section-title">Let's build something together.</h2>
+      <p>I'm actively looking for junior developer and IT engineering roles. If you're hiring or just want to connect, I'd love to hear from you.</p>
+      <div class="contact-links">
+        <a href="mailto:havrenwright@gmail.com" class="contact-link primary">✉️ havrenwright@gmail.com</a>
+        <a href="https://www.linkedin.com/in/havren-wright-1082052b9" target="_blank" class="contact-link outline">LinkedIn</a>
+        <a href="https://github.com/Havvie" target="_blank" class="contact-link outline">GitHub</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 Havren Wright · Built with HTML, CSS & JavaScript · Deployed via GitHub Pages</p>
+</footer>
+
+<script>
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
